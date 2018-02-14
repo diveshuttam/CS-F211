@@ -16,7 +16,7 @@ int main(){
   int choice;
   SeqList sl=newList();
   do{
-    printf("Main Menu:\n\
+    printf("\nMain Menu:\n\
         1. printlist()\n\
         2. insertInOrder()\n\
         3. insertAtFront()\n\
