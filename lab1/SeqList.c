@@ -56,7 +56,7 @@ SeqList insertInOrder(SeqList sl, Element e){
     //rest cases
     Element *ptr=sl.front;
     //move the pointer to the location after which to insert
-    while(ptr->next!=NULL && !compare(e,*(ptr->next))==GREATERTHAN){
+    while(ptr->next!=NULL && (compare(*(ptr->next),e)==LESSTHAN || compare((*ptr->next),e)==EQUAL)){
       ptr=ptr->next;
     }
     Element* e1=malloc(sizeof(e));
