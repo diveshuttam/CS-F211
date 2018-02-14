@@ -26,6 +26,7 @@ typedef struct SeqList{
 
 
 SeqList newList();
+SeqList clearList(SeqList sl);
 SeqList insertInOrder(SeqList sl, Element e);
 SeqList insertAtFront(SeqList sl, Element e);
 SeqList insertAtEnd(SeqList sl, Element e);

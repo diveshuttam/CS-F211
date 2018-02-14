@@ -37,6 +37,12 @@ SeqList newList(){
   return sl;
 }
 
+SeqList clearList(SeqList sl){
+  while(sl.front!=NULL){
+    sl=deleteAtFront(sl);
+  }
+  return sl;
+}
 //compare first is less than second
 bool compare(Element e1, Element e2){
   if(e1.k.data<e2.k.data)

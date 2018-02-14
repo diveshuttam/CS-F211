@@ -3,18 +3,23 @@
 #include<signal.h>
 #include<stdlib.h>
 #include "SeqList.h"
-
+SeqList sl;
 void sigint_handler(int dummy){
   printf("\nYou chose to exit!\n");
   exit(0);
 }
 
+void sigquit_handler(int dummy){
+  printf("\nClearing the SeqList now\n");
+  sl=clearList(sl);
+}
+
 int main(){
   //handle ctrl+c in driver itself
+  signal(SIGQUIT,sigquit_handler);
   signal(SIGINT,sigint_handler);
-
   int choice;
-  SeqList sl=newList();
+  sl=newList();
   do{
     printf("\nMain Menu:\n\
         1. printlist()\n\
@@ -24,7 +29,8 @@ int main(){
         5. delete()\n\
         6. deleteAtFront()\n\
         7. find()\n\
-        Please enter a choice[1-6](Ctrl+C to exit)\n");
+        Please enter a choice[1-6]\n\
+        [Ctrl+\\ to clear the list, Ctrl+C to exit (asynchronously)]\n");
     scanf("%d", &choice);
     Key k;
     Element e;
