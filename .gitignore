@@ -1,4 +1,4 @@
 #ignoring exe and object files
 *.exe
 *.o
-build
+build*

@@ -3,7 +3,9 @@
 #include<signal.h>
 #include<stdlib.h>
 #include "SeqList.h"
+
 SeqList sl;
+
 void sigint_handler(int dummy){
   printf("\nYou chose to exit!\n");
   exit(0);
@@ -52,9 +54,12 @@ int main(){
         sl=insertAtEnd(sl,e);
         break;
       case 5:
+        e=askElement();
+        sl=delete(sl,e);
+      case 6:
         sl=deleteAtFront(sl);
         break;
-      case 6:
+      case 7:
         k=askKey();
         e=*find(sl,k);
         printElement(e);
