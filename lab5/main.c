@@ -28,7 +28,7 @@ main ()
     }
   //printf ("Elements Before Sorting\n");
   //printElements (Ls, currentSize);
-  mergeSort(Ls, 0, 1024000-1);
+  mergeSort (Ls, 0, 1024000 - 1);
   //printf ("Elements After Sorting\n");
   //printElements (Ls, currentSize);
 }

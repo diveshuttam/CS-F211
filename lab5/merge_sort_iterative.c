@@ -20,7 +20,7 @@ swap (Element ** a, Element ** b)
 void
 mergeSort (Element Ls1[], int start, int end)
 {
-  printf("in iterative");
+  printf ("in iterative");
   int size = end - start + 1;
   int arr_size = 1;
   Element *Ls2 = (Element *) malloc (sizeof (Element) * size);
