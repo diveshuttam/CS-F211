@@ -1,20 +1,20 @@
 build: driver.o SeqList.o
-	gcc driver.o SeqList.o -o build
+	gcc -g driver.o SeqList.o -o build
 
-driver.o: driver.c
-	gcc -c driver.c
+driver.o: driver.c SeqList.h
+	gcc -g -c driver.c
 
-SeqList.o: SeqList.c
-	gcc -c SeqList.c
+SeqList.o: SeqList.c SeqList.h
+	gcc -g -c SeqList.c
+
+buildTest: SeqListUses.o SeqListTest.o SeqList.o
+	gcc -g SeqListUses.o SeqListTest.o SeqList.o -o buildTest
+
+SeqListUses.o: SeqListUses.c SeqListUses.h SeqList.h
+	gcc -g -c SeqListUses.c
+
+SeqListTest.o: SeqListTest.c SeqList.h SeqListUses.h
+	gcc -g -c SeqListTest.c
 
 clean:
 	rm -f ./build ./SeqList.o ./driver.o ./buildTest ./SeqListUses.o ./SeqListTest.o
-
-buildTest: SeqListUses.o SeqListTest.o SeqList.o
-	gcc SeqListUses.o SeqListTest.o SeqList.o -o buildTest
-
-SeqListUses.o: SeqListUses.c
-	gcc -c SeqListUses.c
-
-SeqListTest.o: SeqListTest.c
-	gcc -c SeqListTest.c
