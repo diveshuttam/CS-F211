@@ -6,24 +6,31 @@
 
 SeqList sl;
 
-void sigint_handler(int dummy){
-  printf("\nYou chose to exit!\n");
-  exit(0);
+void
+sigint_handler (int dummy)
+{
+  printf ("\nYou chose to exit!\n");
+  exit (0);
 }
 
-void sigquit_handler(int dummy){
-  printf("\nClearing the SeqList now\n");
-  sl=clearList(sl);
+void
+sigquit_handler (int dummy)
+{
+  printf ("\nClearing the SeqList now\n");
+  sl = clearList (sl);
 }
 
-int main(){
+int
+main ()
+{
   //handle ctrl+c in driver itself
-  signal(SIGQUIT,sigquit_handler);
-  signal(SIGINT,sigint_handler);
+  signal (SIGQUIT, sigquit_handler);
+  signal (SIGINT, sigint_handler);
   int choice;
-  sl=newList();
-  do{
-    printf("\nMain Menu:\n\
+  sl = newList ();
+  do
+    {
+      printf ("\nMain Menu:\n\
         1. printlist()\n\
         2. insertInOrder()\n\
         3. insertAtFront()\n\
@@ -33,40 +40,41 @@ int main(){
         7. find()\n\
         Please enter a choice[1-6]\n\
         [Ctrl+\\ to clear the list, Ctrl+C to exit (asynchronously)]\n");
-    scanf("%d", &choice);
-    Key k;
-    Element e;
-    switch(choice)
-    {
-      case 1:
-        printList(sl);
-        break;
-      case 2:
-        e=askElement();
-        sl=insertInOrder(sl,e);
-        break;
-      case 3:
-        e=askElement();
-        sl=insertAtFront(sl,e);
-        break;
-      case 4:
-        e=askElement();
-        sl=insertAtEnd(sl,e);
-        break;
-      case 5:
-        e=askElement();
-        sl=delete(sl,e);
-      case 6:
-        sl=deleteAtFront(sl);
-        break;
-      case 7:
-        k=askKey();
-        e=*find(sl,k);
-        printElement(e);
-        break;
-      default:
-        printf("invalid choice");
+      scanf ("%d", &choice);
+      Key k;
+      Element e;
+      switch (choice)
+        {
+        case 1:
+          printList (sl);
+          break;
+        case 2:
+          e = askElement ();
+          sl = insertInOrder (sl, e);
+          break;
+        case 3:
+          e = askElement ();
+          sl = insertAtFront (sl, e);
+          break;
+        case 4:
+          e = askElement ();
+          sl = insertAtEnd (sl, e);
+          break;
+        case 5:
+          e = askElement ();
+          sl = delete (sl, e);
+        case 6:
+          sl = deleteAtFront (sl);
+          break;
+        case 7:
+          k = askKey ();
+          e = *find (sl, k);
+          printElement (e);
+          break;
+        default:
+          printf ("invalid choice");
+        }
     }
-  }while(1);
+  while (1);
   return 0;
 }
