@@ -4,7 +4,7 @@
 
 typedef struct Element
 {
-  char Name[20];
+  char *Name;
   float CGPA;
 } Element;
 int min (int a, int b);

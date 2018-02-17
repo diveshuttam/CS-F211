@@ -6,25 +6,27 @@
 int
 main ()
 {
-  Element *Ls = (Element *) malloc (1028 * sizeof (Element));
-  int currentMaxSize = 1028;
+  int currentMaxSize = 2;
   int currentSize = 0;
   char name[20];
+  Element *Ls = (Element *) malloc (currentMaxSize* sizeof (Element));
   float cgpa;
 
-  FILE *fp = fopen ("1024.txt", "r");
-  while (fscanf (fp, "%[^,]%*c%f\n", name, &cgpa) != EOF)
+  FILE *fp = fopen ("10240.txt", "r");
+  while (fscanf (fp, "%m[^,]%*c%f\n", &Ls[currentSize].Name, &Ls[currentSize].CGPA) != EOF)
     {
-      if (currentSize >= currentMaxSize - 3)
+      currentSize++;
+      if (currentSize == currentMaxSize)
         {
-          Element *Ls =
+          Ls =
             (Element *) realloc (Ls, (sizeof (Element) * currentMaxSize * 2));
           currentMaxSize *= 2;
+          //printf("addr Ls %p\t\t| addr Ls[0].Name %p\n", Ls, Ls[0].Name);
         }
-      strcpy (Ls[currentSize].Name, name);
-      Ls[currentSize++].CGPA = cgpa;
     }
-  // printElements(Ls, currentSize);
-  mergeSortIterative (Ls, 0, 1023);
+  printf("Elements Before Sorting\n");
+  printElements(Ls, currentSize);
+  mergeSortIterative (Ls, 0, 10239);
+  printf("Elements After Sorting\n");
   printElements (Ls, currentSize);
 }
