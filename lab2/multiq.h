@@ -12,28 +12,30 @@ typedef int Boolean;
 typedef int Priority;
 typedef Element TaskID;
 
-typedef struct Task{
+typedef struct Task
+{
   TaskID tid;
   Priority p;
 } Task;
 
-typedef struct MultiQ{
+typedef struct MultiQ
+{
   int size;
-  Queue *q; //this will point to a queue array
+  Queue *q;                     //this will point to a queue array
 } MultiQ;
 
 
-MultiQ createMQ(int num); //adds t to the Queue corresponding priority in MQ
+MultiQ createMQ (int num);      //adds t to the Queue corresponding priority in MQ
 
-MultiQ addMQ(MultiQ mq, Task t);
+MultiQ addMQ (MultiQ mq, Task t);
 
-Task nextMQ();
+Task nextMQ ();
 
-Task delNextMQ(MultiQ mq);
+Task delNextMQ (MultiQ mq);
 
-Boolean isEmptyMQ(MultiQ mq);
+Boolean isEmptyMQ (MultiQ mq);
 
-int sizeMQ(MultiQ mq);
-int sizeMQbyPriority(MultiQ mq, Priority p);
-Queue getQueueFromMQ(MultiQ mq, Priority p);
+int sizeMQ (MultiQ mq);
+int sizeMQbyPriority (MultiQ mq, Priority p);
+Queue getQueueFromMQ (MultiQ mq, Priority p);
 #endif
