@@ -1,0 +1,13 @@
+addr Ls 0x9aa310		| addr Ls[0].Name 0x9a9270
+addr Ls 0x9ab450		| addr Ls[0].Name 0x9a9270
+addr Ls 0x9ab6a0		| addr Ls[0].Name 0x9a9270
+addr Ls 0x9abac0		| addr Ls[0].Name 0x9a9270
+addr Ls 0x9ac2a0		| addr Ls[0].Name 0x9a9270
+addr Ls 0x9ad150		| addr Ls[0].Name 0x9a9270
+addr Ls 0x9af0b0		| addr Ls[0].Name 0x9a9270
+addr Ls 0x9b3020		| addr Ls[0].Name 0x9a9270
+addr Ls 0x9bafb0		| addr Ls[0].Name 0x9a9270
+addr Ls 0x9cad40		| addr Ls[0].Name 0x9a9270
+addr Ls 0x9ead20		| addr Ls[0].Name 0x9a9270
+addr Ls 0x7fb1203b1010		| addr Ls[0].Name 0x9a9270
+addr Ls 0x7fb120370010		| addr Ls[0].Name 0x9a9270
