@@ -1,6 +1,7 @@
 #include "SeqList.h"
 #include "SeqListUses.h"
-#include<stdio.h>
+#include "SeqListIO.h"
+#include <stdio.h>
 int
 main ()
 {

@@ -1,5 +1,5 @@
-#ifndef _SEQLIST_USES_H
-#define _SEQLIST_USES_H
+#ifndef __SEQLIST_USES_H
+#define __SEQLIST_USES_H
 #include "SeqList.h"
 
 SeqList merge (SeqList sl1, SeqList sl2);
