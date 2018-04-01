@@ -43,4 +43,5 @@ mergeSort (Element Ls1[], int start, int end)
     {
       memcpy (Ls1, currentMainArr, sizeof (Element) * size);
     }
+  free(Ls2);
 }
