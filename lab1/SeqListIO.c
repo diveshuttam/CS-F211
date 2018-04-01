@@ -25,14 +25,14 @@ printList (SeqList sl)
       printElement (ptr);
       ptr = ptr->next;
     }
-  printf("NULL\n");
+  printf ("NULL\n");
 }
 
 Key
 askKey ()
 {
   int data;
-  fprintf (stderr,"Please enter the data value:");
+  fprintf (stderr, "Please enter the data value:");
   scanf ("%d", &data);
   Key k = malloc (sizeof (struct Key));
   k->data = data;

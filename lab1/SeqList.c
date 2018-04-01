@@ -21,7 +21,7 @@ compare (Key k1, Key k2)
 SeqList
 newList ()
 {
-  SeqList sl=malloc(sizeof(struct SeqList));
+  SeqList sl = malloc (sizeof (struct SeqList));
   sl->front = NULL;
   sl->rear = NULL;
   return sl;
@@ -129,13 +129,13 @@ delete (SeqList sl, Element e)
       Element ptr1 = NULL;
       while (ptr->next != NULL)
         {
-          if (compare (ptr->next->k, e->k)==EQUALTO)
+          if (compare (ptr->next->k, e->k) == EQUALTO)
             {
               ptr1 = ptr->next;
               ptr->next = ptr1->next;
               free (ptr1);
-              if(ptr->next==NULL)
-                sl->rear=ptr;
+              if (ptr->next == NULL)
+                sl->rear = ptr;
               break;
             }
           ptr = ptr->next;
@@ -173,11 +173,11 @@ Element
 find (SeqList sl, Key k)
 {
   Element ptr = sl->front;
-  while (ptr!= NULL)
+  while (ptr != NULL)
     {
       if (compare (ptr->k, k) == EQUALTO)
         return ptr;
-      ptr=ptr->next;
+      ptr = ptr->next;
     }
   //not found return null
   return NULL;

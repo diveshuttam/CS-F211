@@ -12,25 +12,31 @@ SeqList sl;
 /// THESES LINES ARE FOR CONVIENENENCE NOT RELATED TO THE SEQLIST
 int checkRedirect;
 void
-clrerr(){
-  fprintf (stderr,"\033[2J\033[H");
+clrerr ()
+{
+  fprintf (stderr, "\033[2J\033[H");
 }
 
-void setRedirection(){
-    char link[256];
-    ssize_t rval;
-    rval = readlink("/proc/self/fd/1", link, sizeof(link));
-    link[rval] = '\0';
+void
+setRedirection ()
+{
+  char link[256];
+  ssize_t rval;
+  rval = readlink ("/proc/self/fd/1", link, sizeof (link));
+  link[rval] = '\0';
 
-    char link1[256];
-    rval = readlink("/proc/self/fd/2", link1, sizeof(link1));
-    link1[rval] = '\0';
-    //printf("%s\n%s", link1, link);
+  char link1[256];
+  rval = readlink ("/proc/self/fd/2", link1, sizeof (link1));
+  link1[rval] = '\0';
+  //printf("%s\n%s", link1, link);
 
-    if (strcmp(link, link1)!=0) {
-      checkRedirect=1;
-    } else {
-      checkRedirect=0;
+  if (strcmp (link, link1) != 0)
+    {
+      checkRedirect = 1;
+    }
+  else
+    {
+      checkRedirect = 0;
     }
 }
 
@@ -48,16 +54,21 @@ sigquit_handler (int dummy)
   sl = clearList (sl);
   printf ("List has been cleared\n");
 }
+
 /// END OF EXTRA LINES
 
-SeqList randomElements(SeqList sl, int noOfElements, SeqList (*f)(SeqList sl, Element e)){
-  for(int i=0;i<noOfElements;i++){
-    Element e=malloc(sizeof(struct Element));
-    Key k=malloc(sizeof(struct Key));
-    k->data=random()%1000;
-    e->k=k;
-    sl=f(sl,e);
-  }
+SeqList
+randomElements (SeqList sl, int noOfElements,
+                SeqList (*f) (SeqList sl, Element e))
+{
+  for (int i = 0; i < noOfElements; i++)
+    {
+      Element e = malloc (sizeof (struct Element));
+      Key k = malloc (sizeof (struct Key));
+      k->data = random () % 1000;
+      e->k = k;
+      sl = f (sl, e);
+    }
   return sl;
 }
 
@@ -69,12 +80,12 @@ main ()
   signal (SIGINT, sigint_handler);
   int choice;
   sl = newList ();
-  setRedirection();
+  setRedirection ();
   do
     {
-      if(checkRedirect)
-        clrerr();
-      fprintf (stderr,"\n-----------------------------------\n\
+      if (checkRedirect)
+        clrerr ();
+      fprintf (stderr, "\n-----------------------------------\n\
 Main Menu:\n\
  0.printlist()\n\
  1.insertInOrder()\n\
@@ -121,37 +132,37 @@ Please enter a choice[0-9]\n\
         case 6:
           k = askKey ();
           e = find (sl, k);
-          if(e !=NULL)
-          {
-            printf("Element found\n");
-            printElement (e);
-          }
+          if (e != NULL)
+            {
+              printf ("Element found\n");
+              printElement (e);
+            }
           else
-            printf("Element was not found in the list");
+            printf ("Element was not found in the list");
           break;
         case 7:
-          fprintf(stderr, "enter the no of elements to insert");
-          scanf("%d", &noOfElements);
-          printf("inserting elements\n");
-          sl=randomElements(sl,noOfElements,insertInOrder);
-          printf("Done");
+          fprintf (stderr, "enter the no of elements to insert");
+          scanf ("%d", &noOfElements);
+          printf ("inserting elements\n");
+          sl = randomElements (sl, noOfElements, insertInOrder);
+          printf ("Done");
           break;
         case 8:
-          fprintf(stderr, "enter the no of elements to insert");
-          scanf("%d", &noOfElements);
-          printf("inserting elements\n");
-          sl=randomElements(sl,noOfElements,insertAtFront);
-          printf("Done");
+          fprintf (stderr, "enter the no of elements to insert");
+          scanf ("%d", &noOfElements);
+          printf ("inserting elements\n");
+          sl = randomElements (sl, noOfElements, insertAtFront);
+          printf ("Done");
           break;
         case 9:
-          fprintf(stderr,"enter the no of elements to insert");
-          scanf("%d", &noOfElements);
-          printf("inserting elements\n");
-          sl=randomElements(sl,noOfElements,insertAtEnd);
-          printf("Done");
+          fprintf (stderr, "enter the no of elements to insert");
+          scanf ("%d", &noOfElements);
+          printf ("inserting elements\n");
+          sl = randomElements (sl, noOfElements, insertAtEnd);
+          printf ("Done");
           break;
         default:
-          fprintf (stderr,"invalid choice");
+          fprintf (stderr, "invalid choice");
         }
     }
   while (1);
