@@ -22,6 +22,7 @@ sigquit_handler (int dummy)
   sl = clearList (sl);
   printf ("List has been cleared\n");
 }
+
 //end of signal handling
 
 int

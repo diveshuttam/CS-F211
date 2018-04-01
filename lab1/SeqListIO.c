@@ -66,6 +66,7 @@ randomElements (SeqList sl, int noOfElements,
     }
   return sl;
 }
+
 /// THESES LINES ARE FOR CONVIENENENCE NOT RELATED TO THE SEQLIST
 void
 clrerr ()

@@ -8,7 +8,8 @@ Key askKey ();
 Element askElement ();
 void printElement (Element e);
 void printList (SeqList sl);
-void setRedirection();
-void clrerr();
-SeqList randomElements(SeqList sl, int noOfElements, SeqList (*f) (SeqList, Element));
+void setRedirection ();
+void clrerr ();
+SeqList randomElements (SeqList sl, int noOfElements,
+                        SeqList (*f) (SeqList, Element));
 #endif
