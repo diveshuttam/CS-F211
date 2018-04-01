@@ -1,11 +1,9 @@
 //the main function for the SeqList program is contained in this file
 #include<signal.h>
-#include<unistd.h>
 #include<stdlib.h>
 #include "SeqListIO.h"
 #include "SeqList.h"
 #include<stdio.h>
-#include<string.h>
 
 SeqList sl;
 
