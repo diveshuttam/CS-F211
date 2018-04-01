@@ -6,40 +6,10 @@
 #include "SeqList.h"
 #include<stdio.h>
 #include<string.h>
+
 SeqList sl;
 
-
-/// THESES LINES ARE FOR CONVIENENENCE NOT RELATED TO THE SEQLIST
-int checkRedirect;
-void
-clrerr ()
-{
-  fprintf (stderr, "\033[2J\033[H");
-}
-
-void
-setRedirection ()
-{
-  char link[256];
-  ssize_t rval;
-  rval = readlink ("/proc/self/fd/1", link, sizeof (link));
-  link[rval] = '\0';
-
-  char link1[256];
-  rval = readlink ("/proc/self/fd/2", link1, sizeof (link1));
-  link1[rval] = '\0';
-  //printf("%s\n%s", link1, link);
-
-  if (strcmp (link, link1) != 0)
-    {
-      checkRedirect = 1;
-    }
-  else
-    {
-      checkRedirect = 0;
-    }
-}
-
+//handling the signals for clearing and exit
 void
 sigint_handler (int dummy)
 {
@@ -54,23 +24,7 @@ sigquit_handler (int dummy)
   sl = clearList (sl);
   printf ("List has been cleared\n");
 }
-
-/// END OF EXTRA LINES
-
-SeqList
-randomElements (SeqList sl, int noOfElements,
-                SeqList (*f) (SeqList sl, Element e))
-{
-  for (int i = 0; i < noOfElements; i++)
-    {
-      Element e = malloc (sizeof (struct Element));
-      Key k = malloc (sizeof (struct Key));
-      k->data = random () % 1000;
-      e->k = k;
-      sl = f (sl, e);
-    }
-  return sl;
-}
+//end of signal handling
 
 int
 main ()
@@ -80,6 +34,8 @@ main ()
   signal (SIGINT, sigint_handler);
   int choice;
   sl = newList ();
+  //printning menu to stderr as well as the input statements
+  //printing ouput of the functions to stdout
   setRedirection ();
   do
     {
