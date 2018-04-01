@@ -7,28 +7,39 @@ typedef struct SeqList *Stack;
 #include "SeqList.h"
 #include <stdlib.h>
 
-Stack clearStack(Stack s){
-  while(top(s)!=NULL){
-    s=pop(s);
-  }
+Stack
+clearStack (Stack s)
+{
+  while (top (s) != NULL)
+    {
+      s = pop (s);
+    }
   return s;
 }
 
-Stack newStack(){
-  Stack s=malloc(sizeof(struct SeqList));
-  s=newList();
+Stack
+newStack ()
+{
+  Stack s = malloc (sizeof (struct SeqList));
+  s = newList ();
   return s;
 }
 
-Stack pop(Stack s){
-   return deleteAtFront(s);
+Stack
+pop (Stack s)
+{
+  return deleteAtFront (s);
 }
 
-Element top(Stack s);
-Stack push(Stack s, Element E){
-   return insertAtFront(s, E);
+Element top (Stack s);
+Stack
+push (Stack s, Element E)
+{
+  return insertAtFront (s, E);
 }
 
-Element top(Stack s){
+Element
+top (Stack s)
+{
   return s->front;
 }

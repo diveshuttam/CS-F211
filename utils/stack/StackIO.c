@@ -16,8 +16,8 @@ void
 printElement (Element e)
 {
   //printf ("Key:%d Next:%p\n", e->k->data, e->next);
-  if(e==NULL)
-    printf("Nil (Empty Stack)\n");
+  if (e == NULL)
+    printf ("Nil (Empty Stack)\n");
   else
     printf ("%d\n", e->k);
 }
@@ -42,15 +42,14 @@ askElement ()
 }
 
 Stack
-randomElements (Stack s, int noOfElements,
-                Stack (*f) (Stack, Element))
+randomElements (Stack s, int noOfElements, Stack (*f) (Stack, Element))
 {
   for (int i = 0; i < noOfElements; i++)
     {
       Element e = malloc (sizeof (struct Element));
       Key k;
       k = random () % 1000;
-      e->k=k;
+      e->k = k;
       s = f (s, e);
     }
   return s;

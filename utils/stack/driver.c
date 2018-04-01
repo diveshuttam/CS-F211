@@ -19,7 +19,7 @@ void
 sigquit_handler (int dummy)
 {
   printf ("\nClearing the Stack now\n");
-  s = clearStack(s);
+  s = clearStack (s);
   printf ("Stack List has been cleared\n");
 }
 
@@ -59,15 +59,15 @@ Please enter a choice[0-5]\n\
         {
         case 1:
           e = askElement ();
-          s = push(s, e);
+          s = push (s, e);
           break;
         case 2:
           s = pop (s);
           break;
         case 3:
-          e = top(s);
-          printf("the top of the stack is: ");
-          printElement(e);
+          e = top (s);
+          printf ("the top of the stack is: ");
+          printElement (e);
           break;
         case 4:
           fprintf (stderr, "enter the no of elements to push");
@@ -80,9 +80,10 @@ Please enter a choice[0-5]\n\
           fprintf (stderr, "enter the no of elements to pop");
           scanf ("%d", &noOfElements);
           printf ("poping elements\n");
-          for(int i=0;i<noOfElements;i++){
-          s=pop(s);
-          }
+          for (int i = 0; i < noOfElements; i++)
+            {
+              s = pop (s);
+            }
           printf ("Done");
           break;
         default:

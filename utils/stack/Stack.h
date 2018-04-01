@@ -13,9 +13,9 @@ typedef int Key;
 
 typedef struct Element *Element;
 
-Stack newStack();
-Stack pop(Stack s);
-Stack push(Stack s, Element e);
-Element top(Stack s);
-Stack clearStack(Stack s);
+Stack newStack ();
+Stack pop (Stack s);
+Stack push (Stack s, Element e);
+Element top (Stack s);
+Stack clearStack (Stack s);
 #endif
