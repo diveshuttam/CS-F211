@@ -1,11 +1,4 @@
-#ifndef __STACK
-#define __STACK
-typedef struct SeqList *Stack;
-#endif
-
 #include "StackIO.h"
-#include "Stack.h"
-#include "SeqList.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -17,7 +10,7 @@ printElement (Element e)
 {
   //printf ("Key:%d Next:%p\n", e->k->data, e->next);
   if (e == NULL)
-    printf ("Nil (Empty Stack)\n");
+    printf ("nil\n");
   else
     printf ("%d\n", e->k);
 }
@@ -25,10 +18,10 @@ printElement (Element e)
 Key
 askKey ()
 {
-  Key K;
+  Key data;
   fprintf (stderr, "Please enter the data value:");
-  scanf ("%d", &K);
-  return K;
+  scanf ("%d", &data);
+  return data;
 }
 
 Element
@@ -37,12 +30,11 @@ askElement ()
   Key K = askKey ();
   Element e = malloc (sizeof (struct Element));
   e->k = K;
-  e->next = NULL;
   return e;
 }
 
 Stack
-randomElements (Stack s, int noOfElements, Stack (*f) (Stack, Element))
+randomElements (Stack s, int noOfElements, Stack (*f) (Stack s, Element e))
 {
   for (int i = 0; i < noOfElements; i++)
     {
@@ -55,7 +47,7 @@ randomElements (Stack s, int noOfElements, Stack (*f) (Stack, Element))
   return s;
 }
 
-/// THESES LINES ARE FOR CONVIENENENCE NOT RELATED TO THE SEQLIST
+/// THESES LINES ARE FOR CONVIENENENCE NOT RELATED TO THE Stack
 void
 clrerr ()
 {
@@ -76,13 +68,9 @@ setRedirection ()
   //printf("%s\n%s", link1, link);
 
   if (strcmp (link, link1) != 0)
-    {
-      checkRedirect = 1;
-    }
+    checkRedirect = 1;
   else
-    {
-      checkRedirect = 0;
-    }
+    checkRedirect = 0;
 }
 
 /// END OF EXTRA LINES

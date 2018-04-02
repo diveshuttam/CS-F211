@@ -11,7 +11,13 @@ typedef struct Stack *Stack;
 typedef int Key;
 #endif
 
-typedef struct Element *Element;
+#ifndef __ELEMENT
+#define __ELEMENT
+typedef struct Element
+{
+  Key k;
+} *Element;
+#endif
 
 Stack newStack ();
 Stack pop (Stack s);

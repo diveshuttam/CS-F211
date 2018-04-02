@@ -7,8 +7,9 @@ extern int checkRedirect;
 Key askKey ();
 Element askElement ();
 void printElement (Element e);
-void printStack (Stack s);
 void setRedirection ();
 void clrerr ();
-Stack randomElements (Stack s, int noOfElements, Stack (*f) (Stack, Element));
+
+Stack
+randomElements (Stack s, int noOfElements, Stack (*f) (Stack s, Element e));
 #endif

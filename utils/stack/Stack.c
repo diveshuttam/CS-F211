@@ -20,8 +20,7 @@ clearStack (Stack s)
 Stack
 newStack ()
 {
-  Stack s = malloc (sizeof (struct SeqList));
-  s = newList ();
+  Stack s = newList ();
   return s;
 }
 
@@ -41,5 +40,27 @@ push (Stack s, Element E)
 Element
 top (Stack s)
 {
-  return s->front;
+  return getNext (getIterator (s));
 }
+
+#ifndef __COMPARE
+#define __COMPARE
+int
+compare (Key k1, Key k2)
+{
+  if (k1 < k2)
+    return LESSTHAN;
+  if (k2 < k1)
+    return GREATERTHAN;
+  return EQUALTO;
+}
+#endif
+
+#ifndef __FREEELEMENT
+#define __FREEELEMENT
+void
+freeElement (Element e)
+{
+  free (e);
+}
+#endif

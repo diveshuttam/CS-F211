@@ -5,7 +5,7 @@ Stack.o: Stack.c Stack.h SeqList.h
 	gcc -g -c Stack.c
 
 SeqList.o: SeqList.c SeqList.h
-	gcc -g -c SeqList.c
+	gcc -g -c -D __FREEELEMENT -D __COMPARE SeqList.c
 
 StackIO.o: StackIO.c StackIO.h Stack.h
 	gcc -g -c StackIO.c
