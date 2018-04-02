@@ -13,7 +13,7 @@ sigint_handler (int dummy)
 {
   printf ("\nYou chose to exit!\n");
   printf ("\nClearing the list first\n");
-  sl = clearList(sl);
+  sl = clearList (sl);
   printf ("Bye!");
   exit (0);
 }

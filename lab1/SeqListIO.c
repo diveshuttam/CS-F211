@@ -16,17 +16,17 @@ printElement (Element e)
 void
 printList (SeqList sl)
 {
-  Iterator it = getIterator(sl);
-  if (!hasNext(it))
+  Iterator it = getIterator (sl);
+  if (!hasNext (it))
     {
       printf ("There are no element in the list\n");
       return;
     }
   printf ("Printing the list:\n");
-  while (hasNext(it))
+  while (hasNext (it))
     {
-      printElement (getNext(it));
-      next(it);
+      printElement (getNext (it));
+      next (it);
     }
   printf ("NULL\n");
 }
@@ -87,8 +87,9 @@ setRedirection ()
   //printf("%s\n%s", link1, link);
 
   if (strcmp (link, link1) != 0)
-      checkRedirect = 1;
+    checkRedirect = 1;
   else
-      checkRedirect = 0;
+    checkRedirect = 0;
 }
+
 /// END OF EXTRA LINES

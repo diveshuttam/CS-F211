@@ -44,16 +44,16 @@ SeqList insertAtEnd (SeqList sl, Element e);
 SeqList delete (SeqList sl, Element e);
 SeqList deleteAtFront (SeqList sl);
 Element find (SeqList sl, Key k);
-Iterator getIterator(SeqList sl);
-Iterator next(Iterator it);
-Element getNext(Iterator it);
-bool hasNext(Iterator it);
-SeqList insertBefore(SeqList sl, Iterator it, Element E);
-SeqList deleteAfter(SeqList sl, Iterator it);
+Iterator getIterator (SeqList sl);
+Iterator next (Iterator it);
+Element getNext (Iterator it);
+bool hasNext (Iterator it);
+SeqList insertBefore (SeqList sl, Iterator it, Element E);
+SeqList deleteAfter (SeqList sl, Iterator it);
 
 //Following functions should be overridden by the user if key and elements are changed
 //default versions are supplied in stack.c
 //override by defining __COMPARE and __FREEELEMENT in complining stack.c
 int compare (Key k1, Key k2);
-void freeElement (Element e); //user needs to define this
+void freeElement (Element e);   //user needs to define this
 #endif

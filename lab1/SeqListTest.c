@@ -10,25 +10,25 @@ main ()
   SeqList sl = newList ();
   int i;
   /*printf ("enter elements for sl1\n");
-  for (i = 1; i <= 5; i++)
-    {
-      printf ("enter element i=%d\n", i);
-      Element E = askElement ();
-      sl1 = insertAtEnd (sl1, E);
-    }
-  printf ("Enter elements for sl2\n");
-  for (i = 1; i <= 5; i++)
-    {
-      printf ("enter element i=%d\n", i);
-      Element E = askElement ();
-      sl2 = insertAtEnd (sl2, E);
-    }*/
+     for (i = 1; i <= 5; i++)
+     {
+     printf ("enter element i=%d\n", i);
+     Element E = askElement ();
+     sl1 = insertAtEnd (sl1, E);
+     }
+     printf ("Enter elements for sl2\n");
+     for (i = 1; i <= 5; i++)
+     {
+     printf ("enter element i=%d\n", i);
+     Element E = askElement ();
+     sl2 = insertAtEnd (sl2, E);
+     } */
   int noOfElements;
 
-  printf("Enter No of elements in list 1\n");
-  scanf("%d", &noOfElements);
-  printf("generating elements for sl1");
-  sl1 = randomElements (sl1, noOfElements,insertAtEnd);
+  printf ("Enter No of elements in list 1\n");
+  scanf ("%d", &noOfElements);
+  printf ("generating elements for sl1");
+  sl1 = randomElements (sl1, noOfElements, insertAtEnd);
   printf ("SL1 is\n");
   printList (sl1);
   printf ("calling insertion sort on list1\n");
@@ -36,9 +36,9 @@ main ()
   printf ("SL1 is\n");
   printList (sl1);
 
-  printf("Enter No of elements in list 2\n");
-  scanf("%d", &noOfElements);
-  printf("generating elements for sl2");
+  printf ("Enter No of elements in list 2\n");
+  scanf ("%d", &noOfElements);
+  printf ("generating elements for sl2");
   sl2 = randomElements (sl2, noOfElements, insertAtEnd);
   printf ("SL2 is\n");
   printList (sl2);
