@@ -1,6 +1,6 @@
 //the main function for the SeqList program is contained in this file
-#include<signal.h>
-#include<stdlib.h>
+#include <signal.h>
+#include <stdlib.h>
 #include "SeqListIO.h"
 #include "SeqList.h"
 #include<stdio.h>
@@ -12,6 +12,9 @@ void
 sigint_handler (int dummy)
 {
   printf ("\nYou chose to exit!\n");
+  printf ("\nClearing the list first\n");
+  sl = clearList(sl);
+  printf ("Bye!");
   exit (0);
 }
 

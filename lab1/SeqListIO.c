@@ -16,17 +16,17 @@ printElement (Element e)
 void
 printList (SeqList sl)
 {
-  Element ptr = sl->front;
-  if (ptr == NULL)
+  Iterator it = getIterator(sl);
+  if (!hasNext(it))
     {
       printf ("There are no element in the list\n");
       return;
     }
   printf ("Printing the list:\n");
-  while (ptr != NULL)
+  while (hasNext(it))
     {
-      printElement (ptr);
-      ptr = ptr->next;
+      printElement (getNext(it));
+      next(it);
     }
   printf ("NULL\n");
 }
@@ -48,7 +48,6 @@ askElement ()
   Key K = askKey ();
   Element e = malloc (sizeof (struct Element));
   e->k = K;
-  e->next = NULL;
   return e;
 }
 
@@ -88,13 +87,8 @@ setRedirection ()
   //printf("%s\n%s", link1, link);
 
   if (strcmp (link, link1) != 0)
-    {
       checkRedirect = 1;
-    }
   else
-    {
       checkRedirect = 0;
-    }
 }
-
 /// END OF EXTRA LINES

@@ -1,12 +1,114 @@
 #include "SeqList.h"
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+//TODO: use this later
+//Free other unused memory like the Iterators
+#ifndef __FREEELEMENT
+#define __FREEELEMENT
+void freeElement(Element e){
+  free(e->k);
+  free(e);
+}
+#endif
+
+typedef struct Node{
+  Element e;
+  struct Node * next;
+}*Node;
+
+typedef struct SeqList
+{
+  Node front;
+  Node rear;
+} *SeqList;
+
+typedef struct Iterator{
+  Node previous;
+  Node current;
+} *Iterator;
+
+Iterator getIterator(SeqList sl){
+  Iterator it = malloc(sizeof(struct Iterator));
+  it->previous=NULL;
+  it->current=sl->front;
+  return it;
+}
+
+Element getNext(Iterator it){
+  if(it->current!=NULL){
+    Element e=it->current->e;
+    return e;
+  }
+  else
+    return NULL;
+}
+
+Iterator next(Iterator it){
+  if(it->current!=NULL){
+    it->previous=it->current;
+    it->current=it->current->next;
+  }
+  return it;
+}
+
+bool hasNext(Iterator it){
+  if(it->current!=NULL){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+SeqList insertBefore(SeqList sl, Iterator it, Element E){
+  Node n=malloc(sizeof(struct Node));
+  n->e=E;
+
+  n->next=it->current;
+
+  if(it->previous!=NULL)
+    it->previous->next=n;
+  else //insert at front
+    sl->front=n;
+  it->previous=n;//n will become previous node now
+
+  if(n->next==NULL)//insert at End
+    sl->rear=n;
+  return sl;
+}
+
+SeqList deleteAfter(SeqList sl, Iterator it){
+  Node temp;
+  if(it==NULL) //DELETE at front
+  {
+    it=getIterator(sl);
+    temp=sl->front;
+    if(temp==NULL)
+      return sl;
+    it->current=NULL;
+    it->previous=NULL;
+  }
+  else
+  {
+    if(it->current==NULL || it->current->next==NULL) //end of list
+      return sl;
+    temp=it->current->next;
+    it->current->next=it->current->next->next;
+  }
+  if(temp==sl->front)//if front node was deleted
+    sl->front=temp->next;
+  if(temp==sl->rear)//if last node was deleted
+    sl->rear=it->current;
+  free(temp);
+  return sl;
+}
 
 //compare function may be changed by the user
 #ifndef __COMPARE
 #define __COMPARE
 //compare first is less than second
-bool
+int
 compare (Key k1, Key k2)
 {
   if (k1->data < k2->data)
@@ -30,8 +132,10 @@ newList ()
 SeqList
 clearList (SeqList sl)
 {
-  while (sl->front != NULL)
+  Iterator it = getIterator(sl);
+  while (hasNext(it))
     {
+      it=next(it);
       sl = deleteAtFront (sl);
     }
   return sl;
@@ -42,31 +146,19 @@ SeqList
 insertInOrder (SeqList sl, Element e)
 {
   //case NULL and case before front
-  if (sl->front == NULL || compare (e->k, sl->front->k) == LESSTHAN)
+  Iterator it = getIterator(sl);
+  if (!hasNext(it) || compare (e->k, getNext(it)->k) == LESSTHAN)
     {
       return insertAtFront (sl, e);
     }
   else
     {
       //rest cases
-      Element ptr = sl->front;
-      //move the pointer to the location after which to insert
-      while (ptr->next != NULL
-             && (compare ((ptr->next)->k, e->k) == LESSTHAN
-                 || compare ((ptr->next)->k, e->k) == EQUALTO))
-        {
-          ptr = ptr->next;
-        }
-      Element e1 = malloc (sizeof (struct Element));
-      e1->k = e->k;
-      e1->next = ptr->next;
-      ptr->next = e1;
-
-      //update sl if inserting at end
-      if (e1->next == NULL)
-        {
-          sl->rear = e1;
-        }
+      Iterator it=getIterator(sl);
+      //move the pointer to the location before which to insert
+      while (hasNext(it) && (compare (e->k, getNext(it)->k) == GREATERTHAN))
+        it=next(it);
+      sl=insertBefore(sl, it, e);
       return sl;
     }
 }
@@ -74,71 +166,50 @@ insertInOrder (SeqList sl, Element e)
 SeqList
 insertAtFront (SeqList sl, Element e)
 {
-  Element e1 = malloc (sizeof (e));
-  e1->next = NULL;
-  e1->k = e->k;
-  //case list is NULL
-  if (sl->rear == NULL)
-    {
-      sl->rear = sl->front = e1;
-    }
-  else
-    {
-      e1->next = sl->front;
-      sl->front = e1;
-    }
-  return sl;
+  Iterator it = getIterator(sl);
+  sl=insertBefore(sl, it , e);
 }
 
 SeqList
 insertAtEnd (SeqList sl, Element e)
 {
-  Element e1 = e;
-  e1->next = NULL;
-  //case list is NULL
-  if (sl->rear == NULL)
-    {
-      sl->rear = sl->front = e1;
-    }
-  //rest cases
-  else
-    {
-      sl->rear->next = e1;
-      sl->rear = e1;
-    }
+  Iterator it = getIterator(sl);
+  while(hasNext(it)){
+    it=next(it);
+  }
+  insertBefore(sl, it, e);
   return sl;
 }
 
 SeqList
 delete (SeqList sl, Element e)
 {
+  Iterator it=getIterator(sl);
   //case null
-  if (sl->rear == NULL)
+  if (!hasNext(it))
     return sl;
 
   //case front
-  if (compare (sl->front->k, e->k) == EQUALTO)
+  while(compare (getNext(it)->k, e->k) == EQUALTO)
     {
-      return deleteAtFront (sl);
+      it=next(it);
+      deleteAtFront (sl);
     }
 
   //rest cases
-  else
     {
-      Element ptr = sl->front;
-      Element ptr1 = NULL;
-      while (ptr->next != NULL)
+      //it2 is being deleted
+      //it2 is just after it1 (1 ahead) 
+      Iterator it1 = getIterator(sl);
+      Iterator it2 = next(getIterator(sl));
+      while (hasNext(it2))
         {
-          if (compare (ptr->next->k, e->k) == EQUALTO)
+          if (compare (getNext(it2)->k, e->k) == EQUALTO)
             {
-              ptr1 = ptr->next;
-              ptr->next = ptr1->next;
-              free (ptr1);
-              if (ptr->next == NULL)
-                sl->rear = ptr;
-              break;
+              sl=deleteAfter(sl, it1);
             }
-          ptr = ptr->next;
+            it1=next(it1);
+            it2=next(it2);
         }
     }
   return sl;
@@ -147,37 +218,19 @@ delete (SeqList sl, Element e)
 SeqList
 deleteAtFront (SeqList sl)
 {
-  //case NULL
-  if (sl->front == NULL)
-    {
-      return sl;
-    }
-  //case only one element
-  if (sl->front == sl->rear)
-    {
-      free (sl->front);
-      sl->front = sl->rear = NULL;
-      return sl;
-    }
-
-  else
-    {
-      Element ptr = sl->front;
-      sl->front = sl->front->next;
-      free (ptr);
-      return sl;
-    }
+  sl=deleteAfter(sl,NULL);
 }
 
 Element
 find (SeqList sl, Key k)
 {
-  Element ptr = sl->front;
-  while (ptr != NULL)
+  Iterator it = getIterator(sl);
+  while (hasNext(it))
     {
-      if (compare (ptr->k, k) == EQUALTO)
-        return ptr;
-      ptr = ptr->next;
+      Element e=getNext(it);
+      if (compare (e->k, k) == EQUALTO)
+        return e;
+      it=next(it);
     }
   //not found return null
   return NULL;

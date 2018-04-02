@@ -7,22 +7,33 @@ merge (SeqList sl1, SeqList sl2)
 {
   SeqList sl = newList ();
   Element E;
-  while (sl1->front != NULL || sl2->front != NULL)
+  Iterator it1=getIterator(sl1);
+  Iterator it2=getIterator(sl2);
+  Element e1, e2;
+  e1=getNext(it1);
+  e2=getNext(it2);
+  while (hasNext(it1) || hasNext(it2))
     {
-      if (sl1->front != NULL
-          && (sl2->front == NULL
-              || compare (sl1->front->k, sl2->front->k) == LESSTHAN))
+      Element elementToInsert = NULL;
+      if(e1==NULL)  
+        elementToInsert = e2;
+      else if(e2 ==NULL)
+        elementToInsert = e1;
+      else if(compare(e2->k, e1->k)==LESSTHAN)
+        elementToInsert = e2;
+      else
+        elementToInsert = e1;
+      insertAtEnd(sl, elementToInsert);
+      if(elementToInsert==e1)
         {
-          E=sl1->front;
-          sl1->front=sl1->front->next;
-          sl = insertAtEnd (sl, E);
+          it1=next(it1);
+          e1=getNext(it1);
         }
       else
-        {
-          E=sl2->front;
-          sl2->front=sl2->front->next;
-          sl = insertAtEnd (sl, E);
-        }
+      {
+        it2=next(it2);
+        e2=getNext(it2);
+      }
     }
   return sl;
 }
@@ -32,11 +43,12 @@ insertionSort (SeqList sl1)
 {
   SeqList sl = newList ();
   Element E;
-  while (sl1->front != NULL)
+  Iterator it = getIterator(sl1);
+  while (hasNext(it))
     {
-      E = (sl1->front);
-      sl1->front=sl1->front->next;
+      E = getNext(it);
       sl = insertInOrder (sl, E);
+      it=next(it);
     }
   return sl;
 }
