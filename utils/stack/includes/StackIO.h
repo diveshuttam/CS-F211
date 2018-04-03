@@ -3,7 +3,7 @@
 #ifndef __STACKIO_H
 #define __STACKIO_H
 extern int checkRedirect;
-#include "Stack.h"
+#include "../Stack.h"
 Key askKey ();
 Element askElement ();
 void printElement (Element e);
