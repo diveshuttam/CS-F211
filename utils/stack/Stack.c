@@ -4,7 +4,7 @@ typedef struct SeqList *Stack;
 #endif
 
 #include "Stack.h"
-#include "SeqList.h"
+#include "includes/SeqList.h"
 #include <stdlib.h>
 
 Stack
