@@ -1,78 +1,59 @@
+#ifndef __QUEUE
+#define __QUEUE
+typedef struct SeqList *Queue;
+#endif
+
 #include "que.h"
+#include <stdlib.h>
 
+//implementation part using SeqList
+#include "includes/SeqList.h"
 
-Queue
-newQ ()
+Queue newQ ()                  //returns empty queue
 {
-  Queue q;
-  q.front = NULL;
-  q.rear = NULL;
-  return q;
+  return newList();
 }
 
-
-int
-isEmptyQ (Queue q)
+Boolean isEmptyQ (Queue q)     //tests whether q is empty
 {
-  return (q.front == NULL && q.rear == NULL);
+  Iterator it=getIterator(q);
+  bool ans=!hasNext(it);
+  free(it);
+  return it;
 }
 
-
-Queue
-delQ (Queue q)
+Queue delQ (Queue q)           //deletes the element form the front 
 {
-  //empty queue
-  if (isEmptyQ (q))
-    return q;
-  //single element in queue
-  else if (q.front == q.rear)
-    {
-      q.front = q.rear = NULL;
-      return q;
-    }
-  //all other cases
-  else
-    {
-      Element *temp = q.front;
-      q.front = (q.front)->next;
-      free (temp);
-      return q;
-    }
+  return deleteAtFront(q);
 }
 
-
-Element
-front (Queue q)
+Element front (Queue q)
 {
-  return *(q.front);
+  Iterator it = getIterator(q);
+  Element E = getNext(it);
+  free(it);
+  return E;
 }
 
-
-Queue
-addQ (Queue q, Element e)
+Queue addQ (Queue q, Element e)
 {
-  Element *e1 = (Element *) malloc (sizeof (Element));
-  if (isEmptyQ (q))
-    {
-      q.front = q.rear = NULL;
-      return q;
-    }
-  else
-    {
-      (q.rear)->next = e1;
-      q.rear = e1;
-    }
+  return insertAtEnd(q, e);
 }
 
-int
-lengthQ (Queue q)
+int lengthQ (Queue q)
 {
-  int i = 0;
-  Element *trace = q.front;
-  while (trace != NULL)
-    {
-      ++i;
-      trace = trace->next;
-    }
-  return i;
+  Iterator it = getIterator(q);
+  int len=0;
+  while(hasNext(it)){
+    next(it);
+    len++;
+  }
+  return len;
 }
+
+#ifndef __FREEELEMENT
+#define __FREEELEMENT
+void freeElement(Element e){
+  free(e);
+}
+#endif
