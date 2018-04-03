@@ -1,5 +1,5 @@
 #include "SeqListIO.h"
-#include "SeqList.h"
+#include "../SeqList.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

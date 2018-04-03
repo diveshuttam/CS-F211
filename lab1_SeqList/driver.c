@@ -1,7 +1,7 @@
 //the main function for the SeqList program is contained in this file
 #include <signal.h>
 #include <stdlib.h>
-#include "SeqListIO.h"
+#include "./includes/SeqListIO.h"
 #include "SeqList.h"
 #include<stdio.h>
 

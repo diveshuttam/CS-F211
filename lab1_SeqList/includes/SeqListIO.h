@@ -3,7 +3,7 @@
 #ifndef __SEQLISTIO_H
 #define __SEQLISTIO_H
 extern int checkRedirect;
-#include "SeqList.h"
+#include "../SeqList.h"
 Key askKey ();
 Element askElement ();
 void printElement (Element e);
