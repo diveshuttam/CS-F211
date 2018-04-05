@@ -1,6 +1,6 @@
 //multiq.h is the header file for multiq
-#ifndef MULTIQ_H
-#define MULTIQ_H
+#ifndef __MULTIQ_H
+#define __MULTIQ_H
 
 #ifndef __ELEMENT
 #define __ELEMENT
