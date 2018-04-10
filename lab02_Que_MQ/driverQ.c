@@ -3,6 +3,8 @@
 #include "que.h"
 #include<signal.h>
 
+Queue q;
+
 //handling the signals for clearing and exit
 void
 sigint_handler (int dummy)
@@ -15,7 +17,8 @@ void
 sigquit_handler (int dummy)
 {
   printf ("\nClearing the queue now\n");
-  sl = clearList (sl);
+  int i;
+  int n=lengthQ(q);
   printf ("List has been cleared\n");
 }
 //end of signal handling

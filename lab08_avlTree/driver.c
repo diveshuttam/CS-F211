@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include"tree.h"
 #include<stdlib.h>
+#include<includes/TreeIO.h>
 
 NODE
 populateTree (NODE root)

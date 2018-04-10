@@ -28,7 +28,7 @@ typedef struct Queue *Queue;
 
 Queue newQ ();                  //returns empty queue
 Boolean isEmptyQ (Queue q);     //tests whether q is empty
-Queue delQ (Queue q);           //deletes the element form the front 
+Queue delQ (Queue q);           //deletes the element from the front 
 Element front (Queue q);
 Queue addQ (Queue q, Element e);
 int lengthQ (Queue q);
