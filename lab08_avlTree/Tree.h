@@ -1,34 +1,32 @@
-#ifndef __TREE_H
-#define __TREE_H
+#ifndef __BINARYTREE_H
+#define __BINARYTREE_H
 
 #ifndef __VALUE
 #define __VALUE
 typedef int value;
 #endif
 
-enum TRAV_RET
-{ RETURN, RIGHT, LEFT };
-
 #ifndef __TREE
 #define __TREE
-typedef struct Tree *Tree;
+typedef struct BinaryTree *BinaryTree;
 #endif
 
-#ifndef __PATH
-#define __PATH
-typedef struct Stack *PATH;
+#ifndef __ELEMENT
+#define __ELEMENT
+typedef struct Element{
+    Value val;
+}*Element;
 #endif
 
 //functions declaration start here
-Tree createTree ();
-Tree add (Tree root, Tree val);
-Tree find (Tree root, Tree val);
-Tree delete (Tree root, Tree val);
-void inOrder (Tree root, void (*f) (Tree));     //passing a function pointer
-void preOrder (Tree root, void (*f) (Tree));
-void postOrder (Tree root, void (*f) (Tree));
-void compare (value val1, value val2);
-
-//you can pass a function to traverse to direct traversing it returns a path
-PATH traverse (Tree root, enum TRAV_RET (*f) (Tree, ...), ...);
+BinaryTree createTree ();
+BinaryTree isEmpty (BinaryTree t);
+BinaryTree mkBTNode(Element e);
+Element getRoot(BinaryTree t);
+BinaryTree setRoot(BinaryTree bt, Element e);
+BinaryTree getLeft(BinaryTree bt);
+BinaryTree getRight(BinaryTree bt);
+BinaryTree setLeft(BinartTree bt, BinaryTree lt);
+BinaryTree setRight(BinartTree bt, BinaryTree rt);
+BinaryTree compose(Element root, BinaryTree lt, BinaryTree right);
 #endif

@@ -1,8 +1,8 @@
 build:	tree.o driver.o
 	gcc -g tree.o driver.o -o build
 
-tree.o:	tree.c tree.h
-	gcc -c -g tree.c
+BinaryTree.o: BinaryTree.c BinaryTree.h
+	gcc -c -g BinaryTree.c
 
 driver.o:	driver.c
 	gcc -c -g driver.c
