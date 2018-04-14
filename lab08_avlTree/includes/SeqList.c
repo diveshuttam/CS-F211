@@ -7,7 +7,7 @@
 #ifndef __FREEELEMENT
 #define __FREEELEMENT
 void
-freeElement (Element e)
+freeElement (SeqListElement e)
 {
   free (e->k);
   free (e);
@@ -16,7 +16,7 @@ freeElement (Element e)
 
 typedef struct Node
 {
-  Element e;
+  SeqListElement e;
   struct Node *next;
 } *Node;
 
@@ -41,12 +41,12 @@ getIterator (SeqList sl)
   return it;
 }
 
-Element
+SeqListElement
 getNext (Iterator it)
 {
   if (it->current != NULL)
     {
-      Element e = it->current->e;
+      SeqListElement e = it->current->e;
       return e;
     }
   else
@@ -78,7 +78,7 @@ hasNext (Iterator it)
 }
 
 SeqList
-insertBefore (SeqList sl, Iterator it, Element E)
+insertBefore (SeqList sl, Iterator it, SeqListElement E)
 {
   Node n = malloc (sizeof (struct Node));
   n->e = E;
@@ -163,7 +163,7 @@ clearList (SeqList sl)
 
 
 SeqList
-insertInOrder (SeqList sl, Element e)
+insertInOrder (SeqList sl, SeqListElement e)
 {
   //case NULL and case before front
   Iterator it = getIterator (sl);
@@ -184,14 +184,14 @@ insertInOrder (SeqList sl, Element e)
 }
 
 SeqList
-insertAtFront (SeqList sl, Element e)
+insertAtFront (SeqList sl, SeqListElement e)
 {
   Iterator it = getIterator (sl);
   sl = insertBefore (sl, it, e);
 }
 
 SeqList
-insertAtEnd (SeqList sl, Element e)
+insertAtEnd (SeqList sl, SeqListElement e)
 {
   Iterator it = getIterator (sl);
   while (hasNext (it))
@@ -203,7 +203,7 @@ insertAtEnd (SeqList sl, Element e)
 }
 
 SeqList
-delete (SeqList sl, Element e)
+SeqList_delete (SeqList sl, SeqListElement e)
 {
   Iterator it = getIterator (sl);
   //case null
@@ -241,7 +241,7 @@ deleteAtFront (SeqList sl)
 {
   sl = deleteAfter (sl, NULL);
 }
-
+/*
 Element
 find (SeqList sl, Key k)
 {
@@ -256,3 +256,4 @@ find (SeqList sl, Key k)
   //not found return null
   return NULL;
 }
+*/

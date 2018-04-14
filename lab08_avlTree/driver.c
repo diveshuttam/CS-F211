@@ -1,10 +1,12 @@
 #include<stdio.h>
-#include"tree.h"
+#include"BinarySearchTree.h"
 #include<stdlib.h>
-#include<includes/TreeIO.h>
+#include"includes/TreeIO.h"
 
-NODE
-populateTree (NODE root)
+BinarySearchTree bst;
+
+BinarySearchTree
+populateTree (BinarySearchTree bst)
 {
   int i = 0;
   int max = 100000;
@@ -12,15 +14,16 @@ populateTree (NODE root)
   while (i < max)
     {
       i++;
-      root = add (root, 150 + (random () % 21));
+      int k=150 + (random () % 21);
+      Element E=getElement(k);
+      bst = add (bst, E);
     }
-  return root;
+  return bst;
 }
 
 int
 main ()
 {
-  NODE root = NULL;
   int ch, val;
   do
     {
@@ -29,6 +32,7 @@ main ()
               "2. Print tree\n"
               "3. find a node\n"
               "4. populate tree with random [150-170]\n"
+              "5. delete a node\n"
               "Enter your choice:\t");
       scanf ("%d", &ch);
       switch (ch)
@@ -36,22 +40,28 @@ main ()
         case 1:
           printf ("Enter the value:");
           scanf ("%d", &val);
-          root = add (root, val);
+          Element E=getElement(val);
+          bst = add (bst, E);
           break;
         case 2:
-          printTree (root);
+          printTree (bst);
           break;
         case 3:
           printf ("Enter the value:");
           scanf ("%d", &val);
-          if (find (root, val) != NULL)
+          if (find (bst, val) != NULL)
             printf ("value found\n");
           else
             printf ("value not found\n");
           break;
         case 4:
           //add 10000 random no. between 150 and 170
-          root = populateTree (root);
+          bst = populateTree (bst);
+          break;
+        case 5:
+          printf ("Enter the value:");
+          scanf ("%d", &val);
+          bst = delete(bst, val);
           break;
         default:
           exit (0);

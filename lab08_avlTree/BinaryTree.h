@@ -2,9 +2,9 @@
 #define __BINARYTREE_H
 #include<stdbool.h>
 
-#ifndef __VALUE
-#define __VALUE
-typedef int value;
+#ifndef __KEY
+#define __KEY
+typedef int Key;
 #endif
 
 #ifndef __TREE
@@ -16,7 +16,7 @@ typedef struct BinaryTree *BinaryTree;
 #ifndef __ELEMENT
 #define __ELEMENT
 typedef struct Element{
-    value val;
+    Key k;
 }*Element;
 #endif
 

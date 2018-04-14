@@ -3,7 +3,10 @@
 typedef struct SeqList *Stack;
 #endif
 
+
 #include "Stack.h"
+#define __SEQLIST_ELEMENT
+typedef StackElement SeqListElement;
 #include "SeqList.h"
 #include <stdlib.h>
 
@@ -30,36 +33,23 @@ pop (Stack s)
   return deleteAtFront (s);
 }
 
-Element top (Stack s);
+StackElement top (Stack s);
 Stack
-push (Stack s, Element E)
+push (Stack s, StackElement E)
 {
   return insertAtFront (s, E);
 }
 
-Element
+StackElement
 top (Stack s)
 {
   return getNext (getIterator (s));
 }
 
-#ifndef __COMPARE
-#define __COMPARE
-int
-compare (Key k1, Key k2)
-{
-  if (k1 < k2)
-    return LESSTHAN;
-  if (k2 < k1)
-    return GREATERTHAN;
-  return EQUALTO;
-}
-#endif
-
 #ifndef __FREEELEMENT
 #define __FREEELEMENT
 void
-freeElement (Element e)
+freeElement (StackElement e)
 {
   free (e);
 }

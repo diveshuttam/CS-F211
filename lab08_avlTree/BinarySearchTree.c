@@ -1,21 +1,19 @@
 #include "BinarySearchTree.h"
 #include "BinaryTree.h"
 
-//for stack my element is a tree node
-#define Element BinarySearchTree
+#define __STACKELEMENT
+typedef BinarySearchTree StackElement;
 #include "includes/Stack.h"
-#undef Element
-
-#include<stdarg.h> // for variable arguments
+#include <stdlib.h>
 
 //greater than right
-//lessthan Equal to left
+//LESSTHAN to left
 
 typedef struct Stack *PathStack;
 
 #ifndef __COMPARE
 #define __COMPARE
-COMP_RET compare(key k1, key k2)
+COMP_RET compare(Key k1, Key k2)
 {
 	if(k1<k2)
 		return LESSTHAN;
@@ -26,35 +24,26 @@ COMP_RET compare(key k1, key k2)
 }
 #endif
 
-TRAV_RET tcompare(Element E, Element E1)
-{
-	if(compare(E->k,E1->k)==EQUALTO)
-		return RETURN;
-	else if(compare(E1->k, E->k)==GREATERTHAN)
-		return LEFT;
-	else
-		return RIGHT;
-}
-
-PathStack traveseStack(bst, TRAV_RET (*tcompare) (Element E, void * args), void *args1)
+PathStack traverseStack(BinarySearchTree bst, Key k)
 {
 	PathStack p=newStack();
-	TRAV_RET ret;
+	COMP_RET ret;
 	BinarySearchTree cur=bst;
 	while(!isEmpty(cur))
 	{
 		p=push(p,cur);
-		ret=tcompare(getRoot(cur),args1);
-		if(ret==RIGHT)
-			cur=getRight(curr);
-		else if(ret==LEFT)
-			cur=cur->left;
-		else if(ret==RETURN)
-			break;
-		else
+		ret=compare(k,getRoot(cur)->k);
+		if(ret==GREATERTHAN)
+			cur=getRight(cur);
+		else if(ret==LESSTHAN)
+			cur=getLeft(cur);
+		else if(ret==EQUALTO)
 			break;
 	}
-	return PATH;
+	if(ret!=EQUALTO)
+	  return NULL;
+	else
+	  return p;
 }
 
 Element find(BinarySearchTree bst, Key k)
@@ -64,60 +53,132 @@ Element find(BinarySearchTree bst, Key k)
     return NULL;//NOT_FOUND
   Element r=getRoot(bst);  
   //base case (root)
-  if(compare(r->key,k)==EQUALTO)
+  if(compare(r->k,k)==EQUALTO)
     return r;
   //case right
-  else if(compare(k, r->key)==GREATERTHAN)
+  else if(compare(k, r->k)==GREATERTHAN)
     return find(getRight(bst), k);
   //case left
   else
     return find(getLeft(bst), k);
 }
 
-//if the key is already there then update
+//if the Key is already there then update
 BinarySearchTree add(BinarySearchTree bst, Element e)
 {
   //case empty
   if(isEmpty(bst))
-  	return setRoot(bst,e);
+  	return mkBTNode(e);
   
   Element r=getRoot(bst);
   
   //case equal --> update
-  if(compare(e->key,r->key)==EQUALTO)
+  if(compare(e->k,r->k)==EQUALTO)
   		return setRoot(bst,e);
   //case right
-  else if(compare(e->key,r->key)==GREATERTHAN)
-      return add(getRight(bst),e);
+  else if(compare(e->k,r->k)==GREATERTHAN)
+      return setRight(bst,add(getRight(bst),e));
   //case left
   else
-  		return add(getLeft(bst), e);
+  		return setLeft(bst, add(getLeft(bst), e));
 }
 
-
-//free is a necessity
-BinarySearchTree delete(BinarySearchTree bst, key k)
+//returns successor
+PathStack inOrderSuccessor(BinarySearchTree bst,Key k)
 {
-	PathStack p=traverseStack(bst, tcompare, E);
+  PathStack p=traverseStack(bst, k);
+	BinarySearchTree E,E1,cur,curparent;
+	E=top(p);
 	
-	while(pop(p))
-	//case empty
-	if(isEmpty(bst))
-	 return bst;
+  //if has a right sub tree, then go left left
+  if(!isEmpty(getRight(E)))
+  {
+    cur=getRight(E);
+    while(!isEmpty(cur))
+    {
+      p=push(p,cur);
+      cur=getLeft(cur);
+    }
+		return p;
+  }
+  //find the first parent who has this as a left subtree
+  else
+  {
+    cur=top(p);
+    p=pop(p);
+    curparent=top(p);
+    while(curparent!=NULL)//stack is not empty
+    {
+      if(getLeft(curparent)==cur)
+        break;
+      cur=top(p);
+      p=pop(p);
+      curparent=top(p);
+    }
+    if(curparent==NULL)
+      return NULL;
+    else
+			return p;
+	}
+}
+
+BinarySearchTree delete(BinarySearchTree bst, Key k)
+{
+	PathStack p=traverseStack(bst, k);
+	BinarySearchTree E;
 	
-	//case leaf
-	if(isEmpty(getRight(bst)) && isEmpty(getLeft(bst)))
-		//set parent's pointer to null
-	
-	//case half empty
-	if(isEmpty(getRight(bst) || isEmpty(getLeft(bst))))
-		//override parent's right/left with my non empty child
-	
-	//other cases
-	else
-		//replace the by successor and other stuff
-		//do a traverse with stack
-		E=getElement(k);
-		
-	
+	if(p!=NULL){//path is not empty	i.e element is found
+	  E=top(p);
+	  
+	  //swap if none of the child is empty
+	  if(!isEmpty(getRight(E)) && !isEmpty(getLeft(E)))
+	  {
+	    PathStack pios=inOrderSuccessor(bst,k);
+	    //swap successor and self
+	    Element a=getRoot(top(p));
+	    setRoot(top(p),getRoot(top(pios)));
+	    setRoot(top(pios),a);
+	    //change p to pios	
+	    p=pios;
+	  }
+		E=top(p);
+  
+    //deletes actually here
+	  //right is empty
+	  if(isEmpty(getRight(E)))
+	  {
+	    p=pop(p);
+			if(top(p)==NULL)
+			{
+				return getLeft(E);
+			}
+	    BinarySearchTree parent=top(p);
+	    if(E==getRight(parent))
+	    {
+	      setRight(parent,getLeft(E));
+	    }
+	    else
+	    {
+	      setLeft(parent,getLeft(E));
+	    }
+	  }
+	  //left is empty
+	  else if(isEmpty(getLeft(E)))
+	  {
+		  //override parent's right/left with my non empty child
+		  p=pop(p);
+			if(top(p)==NULL)
+				return getRight(E);
+	    BinarySearchTree parent=top(p);
+	    if(E==getRight(parent))
+	    {
+	      setRight(parent,getRight(E));
+	    }
+	    else
+	    {
+	      setLeft(parent,getRight(E));
+	    }
+	  }
+	}
+	return bst;
 }

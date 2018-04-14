@@ -1,25 +1,25 @@
 #ifndef __BST_H
 #define __BST_H
 
-#ifndef __VALUE
-#define __VALUE
-typedef int value;
+#ifndef __KEY
+#define __KEY
+typedef int Key;
 #endif
 
 #ifndef __ELEMENT
 #define __ELEMENT
 typedef struct Element{
-    value val;
+    Key k;
 }*Element;
 #endif
 
 typedef struct BinaryTree *BinarySearchTree;
 
-enum COMP_RET
-{ LESSTHAN, GREATERTHAN, EQUALTO };
+typedef enum COMP_RET
+{ LESSTHAN, GREATERTHAN, EQUALTO } COMP_RET;
 
-BinarySearchTree add (BinarySearchTree root, BinarySearchTree val);
-BinarySearchTree find (BinarySearchTree root, BinarySearchTree val);
-BinarySearchTree delete (BinarySearchTree root, BinarySearchTree val);
-void compare (value val1, value val2);
+BinarySearchTree add (BinarySearchTree root, Element e);
+Element find (BinarySearchTree root, Key k);
+BinarySearchTree delete (BinarySearchTree root, Key k);
+COMP_RET compare (Key k1, Key k2);
 #endif

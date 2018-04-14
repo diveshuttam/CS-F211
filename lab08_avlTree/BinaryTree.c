@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-// #include "includes/Stack.h"
-// #include "includes/TreeIO.h"
 
 typedef struct BinaryTree *BinaryTree;
 

@@ -11,17 +11,14 @@ typedef struct Stack *Stack;
 typedef int Key;
 #endif
 
-#ifndef __ELEMENT
-#define __ELEMENT
-typedef struct Element
-{
-  Key k;
-} *Element;
+#ifndef __STACKELEMENT
+#define __STACKELEMENT
+typedef struct BinaryTree *StackElement;
 #endif
 
 Stack newStack ();
 Stack pop (Stack s);
-Stack push (Stack s, Element e);
-Element top (Stack s);
+Stack push (Stack s, StackElement e);
+StackElement top (Stack s);
 Stack clearStack (Stack s);
 #endif
