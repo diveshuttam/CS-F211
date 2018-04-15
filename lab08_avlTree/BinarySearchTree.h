@@ -13,7 +13,10 @@ typedef struct Element{
 }*Element;
 #endif
 
+#ifndef __BINARYSEARCHTREE 
+#define __BINARYSEARCHTREE
 typedef struct BinaryTree *BinarySearchTree;
+#endif
 
 typedef enum COMP_RET
 { LESSTHAN, GREATERTHAN, EQUALTO } COMP_RET;

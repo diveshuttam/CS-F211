@@ -1,17 +1,10 @@
-#include "BinaryTree.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-
+#include "BinaryTree.h"
+#include "TreeDefinition.h"
 typedef struct BinaryTree *BinaryTree;
-
-struct BinaryTree
-{
-  Element rootVal;
-  BinaryTree right;
-  BinaryTree left;
-};
 
 BinaryTree
 mkBTNode (Element e)
@@ -20,6 +13,7 @@ mkBTNode (Element e)
   n=setRoot(n,e);
   n=setLeft(n,NULL);
   n=setRight(n,NULL);
+  n->balance=0;
   return n;
 }
 

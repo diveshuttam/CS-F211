@@ -1,5 +1,6 @@
 #include "BinarySearchTree.h"
 #include "BinaryTree.h"
+#include "TreeDefinition.h"
 
 #define __STACKELEMENT
 typedef BinarySearchTree StackElement;
@@ -9,7 +10,88 @@ typedef BinarySearchTree StackElement;
 //greater than right
 //LESSTHAN to left
 
+typedef enum UPDT_TYPE{ADD, DEL, NONE} UPDT_TYPE;
+
 typedef struct Stack *PathStack;
+
+int max(int a, int b)
+{
+	return (a>b)?a:b;
+}
+int getBalance(BinarySearchTree bst)
+{
+	return bst->balance;
+}
+
+void setBalance(BinarySearchTree bst,int balance)
+{
+	bst->balance=balance;
+}
+
+//complexity o(pathlength) only go to the heavy side
+int getHeight(BinarySearchTree bst)
+{
+	int height=0;
+	BinarySearchTree cur=bst;
+	while(!isEmpty(cur))
+	{
+		++height;
+		if(getBalance(cur)==-1)
+		{
+			cur=getLeft(cur);
+		}	
+		else
+		{
+			cur=getRight(cur);
+		}
+	}
+	return height;
+}
+
+/* assuming difference pass none to update all correctly*/
+//complexity o(pathLength)
+void updateBalance(PathStack p, UPDT_TYPE t)
+{
+	BinarySearchTree E;
+
+	if(t==NONE)
+	{
+		while((E=top(p))!=NULL)//while stack is not empty
+		{
+			setBalance(E,max(getHeight(getLeft(E)),getHeight(getRight(E)))+1);
+			p=pop(p);
+		}
+	}
+	else if(t==ADD || t==DEL)
+	{
+		// BinarySearchTree child=top(p);
+		// p=pop(p);
+		// while((E=top(p))!=NULL)//while stack is not empty
+		// {
+		// 	int oldBalance=getBalance(E);
+		// 	if(getRight(E)==child)
+		// 	{
+		// 		setBalance(E,getBalance(E)+1);
+		// 	}
+		// 	else if(getLeft(E)==child)
+		// 	{
+		// 		setBalance(E,getBalance(E)+1);
+		// 	}
+		// 	int newBalance=getBalance(E);
+		// 	if(newBalance==2)
+		// 	{
+		// 		return p;
+		// 	}
+		// 	if(newBalance==0)
+		// 	{
+		// 		break;
+		// 	}
+		// 	child=E;
+		// 	p=pop(p);
+		// }
+		// return NULL;//no disbalance
+	}
+}
 
 #ifndef __COMPARE
 #define __COMPARE
@@ -40,9 +122,6 @@ PathStack traverseStack(BinarySearchTree bst, Key k)
 		else if(ret==EQUALTO)
 			break;
 	}
-	if(ret!=EQUALTO)
-	  return NULL;
-	else
 	  return p;
 }
 
@@ -67,20 +146,27 @@ Element find(BinarySearchTree bst, Key k)
 BinarySearchTree add(BinarySearchTree bst, Element e)
 {
   //case empty
+	BinarySearchTree e1=mkBTNode(e);
   if(isEmpty(bst))
-  	return mkBTNode(e);
+  	return e1;
+	
+	PathStack p=traverseStack(bst, e->k);
   
-  Element r=getRoot(bst);
+  BinarySearchTree r=top(p);
   
   //case equal --> update
-  if(compare(e->k,r->k)==EQUALTO)
-  		return setRoot(bst,e);
+  if(compare(e->k,getRoot(r)->k)==EQUALTO)
+  		setRoot(r,e);
   //case right
-  else if(compare(e->k,r->k)==GREATERTHAN)
-      return setRight(bst,add(getRight(bst),e));
+  else if(compare(e->k,getRoot(r)->k)==GREATERTHAN)
+      setRight(r,e1);
   //case left
   else
-  		return setLeft(bst, add(getLeft(bst), e));
+  		setLeft(r,e1);
+	push(p,e1);
+	//updateBalance(p, NONE);
+	//updateBalance(p, DEL);
+	return bst;
 }
 
 //returns successor
@@ -89,7 +175,11 @@ PathStack inOrderSuccessor(BinarySearchTree bst,Key k)
   PathStack p=traverseStack(bst, k);
 	BinarySearchTree E,E1,cur,curparent;
 	E=top(p);
-	
+	//if not found
+	if(getRoot(E)->k!=k)
+	{
+		return NULL;
+	}
   //if has a right sub tree, then go left left
   if(!isEmpty(getRight(E)))
   {
@@ -127,7 +217,7 @@ BinarySearchTree delete(BinarySearchTree bst, Key k)
 	PathStack p=traverseStack(bst, k);
 	BinarySearchTree E;
 	
-	if(p!=NULL){//path is not empty	i.e element is found
+	if(top(p)!=NULL && getRoot(top(p))->k==k){//path element is found
 	  E=top(p);
 	  
 	  //swap if none of the child is empty

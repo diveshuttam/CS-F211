@@ -7,8 +7,8 @@
 typedef int Key;
 #endif
 
-#ifndef __TREE
-#define __TREE
+#ifndef __BINARYTREE
+#define __BINARYTREE
 typedef struct BinaryTree *BinaryTree;
 #endif
 
