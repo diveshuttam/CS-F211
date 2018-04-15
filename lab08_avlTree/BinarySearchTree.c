@@ -64,32 +64,7 @@ void updateBalance(PathStack p, UPDT_TYPE t)
 	}
 	else if(t==ADD || t==DEL)
 	{
-		// BinarySearchTree child=top(p);
-		// p=pop(p);
-		// while((E=top(p))!=NULL)//while stack is not empty
-		// {
-		// 	int oldBalance=getBalance(E);
-		// 	if(getRight(E)==child)
-		// 	{
-		// 		setBalance(E,getBalance(E)+1);
-		// 	}
-		// 	else if(getLeft(E)==child)
-		// 	{
-		// 		setBalance(E,getBalance(E)+1);
-		// 	}
-		// 	int newBalance=getBalance(E);
-		// 	if(newBalance==2)
-		// 	{
-		// 		return p;
-		// 	}
-		// 	if(newBalance==0)
-		// 	{
-		// 		break;
-		// 	}
-		// 	child=E;
-		// 	p=pop(p);
-		// }
-		// return NULL;//no disbalance
+		//to be implemented
 	}
 }
 
